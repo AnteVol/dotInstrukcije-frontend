@@ -2,12 +2,14 @@ import { Button } from "@mui/material";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 import { logout } from "../../api/AuthApi";
+import { FaCog, FaUserTie, FaUserGraduate, FaSignOutAlt, FaBook  } from 'react-icons/fa';
 
 function HomePage() {
   const token = localStorage.getItem("token");
   let loggedIn = Boolean(token);
 
   let user = JSON.parse(localStorage.getItem("user"));
+  
 
   return (
     <>
@@ -22,22 +24,33 @@ function HomePage() {
           <div className="flex-row navbar-options">
             {loggedIn ? (
               <>
-                <Link to="/">
-                  <Button variant="contained">Pretraži</Button>
+                {user.status === "professor" && (
+                  <Link to="/new">
+                  <Button variant="contained">Novi predmet</Button>
+                </Link>
+                )}
+                <Link to="/subjects">
+                  <Button variant="contained"><FaBook style={{ fontSize: '2em' }}/></Button>
                 </Link>
                 <Link to="/profile">
                   <Button variant="contained">Moje instrukcije</Button>
                 </Link>
-                <Link to="/settings">
-                  <Button variant="contained">Postavke</Button>
+                <Link to="/settings" variant="contained" style={{ fontSize: '2em' }}>
+                   <FaCog />
                 </Link>
-                {user.status === "professor" && (
-                  <Link to="/new">
-                    <Button variant="contained">Novi predmet</Button>
-                  </Link>
-                )}
+                <Link to="/" variant="contained" style={{ fontSize: '2em' }}>
+                    {user.status  === "professor" ? (
+                        <>
+                        <FaUserTie />
+                        </>
+                      ) : user.status  === "student" ? (
+                        <>
+                        <FaUserGraduate />
+                        </>
+                      ) : null}
+                </Link>
                 <Button variant="contained" onClick={logout}>
-                  Odjavi se
+                 <FaSignOutAlt style={{ fontSize: '2em' }} />
                 </Button>
               </>
             ) : (

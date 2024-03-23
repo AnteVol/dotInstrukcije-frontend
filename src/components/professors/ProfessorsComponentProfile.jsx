@@ -1,10 +1,10 @@
-/* eslint-disable react/prop-types */
 import { Button } from "@mui/material";
-import { useState, useEffect } from "react";
-import "./ProfessorsComponent.css";
+import { useState } from "react";
+import "./ProfessorsComponentProfile.css";
 import DateTimeDialog from "../dialog/DateTimeDialog";
+import { FaClock } from 'react-icons/fa';
 
-function ProfessorsComponent({
+function ProfessorsComponentProfile({
   professors,
   showSubject,
   showInstructionsCount,
@@ -26,8 +26,10 @@ function ProfessorsComponent({
     setDialogOpen(newDialogOpen);
   };
 
+
+
   return (
-    <>
+    <div>
       <div className="professor-container">
         {professors?.map((professor, index) => (
           <div key={professor._id} className="professor">
@@ -56,21 +58,31 @@ function ProfessorsComponent({
 
               {showTime && (
                 <div className="instructionsCount-container">
-                  <img src="/icons/users-icon.svg" className="users-icon" />
-                  <p>{professor.time}</p>
+                  <p>
+                  <FaClock style={{ margin: '0 5px' }}/>
+                    {new Date(professor.time).toLocaleDateString('hr-HR', {
+                      weekday: 'long',
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}{' '}
+                    {new Date(professor.time).toLocaleTimeString('hr-HR')}
+                  </p>
                 </div>
               )}
-              {JSON.parse(localStorage.getItem("user"))?.status === "student" && (
-              <Button onClick={() => handleButtonClick(index)} variant={buttonVariant ? buttonVariant : "contained"}>
+              {JSON.parse(localStorage.getItem('user'))?.status === "student" && (
+              <Button onClick={() => handleButtonClick(index, buttonText)} variant={buttonVariant ? buttonVariant : "contained"}>
                 {buttonText ? buttonText : "Dogovori termin"}
               </Button>
              )}
+
             </div>
             <DateTimeDialog open={dialogOpen[index]} onClose={() => handleCloseDialog(index)} professor={professor} user={localStorage.getItem("user")?.id}/>
           </div>
         ))}
       </div>
-    </>
+
+    </div>
   );
 }
-export default ProfessorsComponent;
+export default ProfessorsComponentProfile;

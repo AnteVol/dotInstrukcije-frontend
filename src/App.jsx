@@ -8,6 +8,7 @@ import ProfilePage from './pages/profilepage/ProfilePage.jsx'
 import PingPage from './pages/pages/PingPage.jsx';
 import SettingsPage from './pages/settings/SettingsPage.jsx';
 import NewSubject from './pages/newsubjectpage/NewSubjectPage.jsx';
+import SubjectsPage from './pages/subject/SubjectsPage.jsx';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/ping" element={<PingPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/new" element={<NewSubject />} />
+          <Route path="/subjects" element={<SubjectsPage />} />
        </Routes>
       </div>
     </Router>

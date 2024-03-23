@@ -1,89 +1,35 @@
-import "./HomePage.css";
-
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from 'react';
-
-import InputAdornment from "@mui/material/InputAdornment";
+import { getSubjects } from "../../api/SubjectApi";
+import { getProfessors , getNewProfessors} from "../../api/ProfessorApi";
 import ProfessorsComponent from "../../components/professors/ProfessorsComponent";
-import { getSubjects } from '../../api/SubjectApi';
-import { getProfessors } from '../../api/ProfessorApi';
-
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-
-
-function ComboBox() {
-  const [subjects, setSubjects] = useState([]);
-
-  useEffect(() => {
-    getSubjects().then(response => setSubjects(response.subjects));
-  }, []);
-
-  const handleSubjectSelect = (event, value) => {
-    if (value) {
-      window.location.href = `/subject/${value.url}`;
-    }
-  };
-
-  return (
-    <>
-    <div className="search-container">
-    <Autocomplete
-      disablePortal
-      id="combo-box-demo"
-      options={subjects}
-      getOptionLabel={(option) => option.title}
-      onChange={handleSubjectSelect}
-      renderInput={(params) =>
-        <TextField {...params} 
-        InputProps={{
-          ...params.InputProps,
-          startAdornment: (
-            <InputAdornment position="start">
-              <img
-                src="/icons/search-icon.svg"
-                style={{ height: "20px", width: "20px" }}
-              />
-            </InputAdornment>
-          ),
-        }}
-        />
-      }
-    />
-    {/* <Button variant="contained" onClick={handleButtonClick}>Pretraži</Button> */}
-    </div>
-    <div>
-      {subjects.map((subject) => (
-        <Link
-          to={`/subject/${subject.url}`}
-          key={subject.url}
-          className="link-no-style"
-        >
-          <div className="predmet">
-            <h2 className="predmet-text">{subject.title}</h2>
-            <p className="predmet-text">{subject.description}</p>
-          </div>
-        </Link>
-      ))}
-    </div>
-    </>
-  );
-}
+import BestProfessorsGraph from "../../components/design/ProfessorGraph";
+import "./HomePage.css";
 
 function HomePage() {
   const [professors, setProfessors] = useState([]);
+  const [subjects, setSubjects] = useState([]);
 
   useEffect(() => {
-      const fetchProfessors = async () => {
-        const fetchedProfessors = await getProfessors();
-        setProfessors(fetchedProfessors.professors);
-      };
+    const fetchProfessors = async () => {
+      const fetchedProfessors = await getNewProfessors();
+      setProfessors(fetchedProfessors.professors);
+    };
 
     fetchProfessors();
   }, []);
 
-  if (!localStorage.getItem('token')) {
-    window.location.href = '/login';
+  useEffect(() => {
+    const fetchSubjects = async () => {
+      const response = await getSubjects();
+      setSubjects(response.subjects);
+    };
+
+    fetchSubjects();
+  }, []);
+
+  if (!localStorage.getItem("token")) {
+    window.location.href = "/login";
   }
 
   return (
@@ -96,12 +42,29 @@ function HomePage() {
               <h2>instrukcije po mjeri!</h2>
             </div>
 
-              <ComboBox />
-
+            {subjects.slice(0, 8).map((subject) => (
+              <Link
+                to={`/subject/${subject.url}`}
+                key={subject.url}
+                className="link-no-style"
+              >
+                <div className="predmet">
+                  <h2 className="predmet-text">{subject.title}</h2>
+                  <p className="predmet-text">
+                    {subject.description.length > 100 
+                      ? `${subject.description.slice(0, 100)}...` 
+                      : subject.description}
+                  </p>
+                </div>
+              </Link>
+            ))}
           </div>
 
-          <div>
-            <h4>Najpopularniji instruktori:</h4>
+          <div className="professors">
+           <div className="title2"> <img src="/logo/dotGet-logo.svg" alt="" />
+              <h2 className="professorH2">profesori:</h2>
+              </div> 
+         
             <ProfessorsComponent
               professors={professors}
               showSubject={true}
@@ -109,6 +72,11 @@ function HomePage() {
             />
           </div>
         </div>
+      </div>
+
+
+      <div className="homepage-graph">
+        <BestProfessorsGraph />
       </div>
     </>
   );

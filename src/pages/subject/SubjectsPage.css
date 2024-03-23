@@ -1,0 +1,58 @@
+.subjects-page-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.subjects-container {
+    width: 90%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 10px;
+    margin: 2rem 0;
+}
+
+.title {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    margin: 2rem 0;
+}
+
+.title2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 2rem;
+}
+
+.subject-title {
+    font-family: Arial, sans-serif;
+    font-size: 2em; 
+    color: black; 
+    font-weight: bold;
+}
+
+.subject-card {
+    background-color: white;
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0px;
+    height: 300px; 
+}
+
+.subject-description {
+    padding: 0px;
+    margin: 0px;
+}
+
+.subject-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+@media (max-width: 1200px) {
+    
+}

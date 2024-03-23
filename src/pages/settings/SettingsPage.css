@@ -1,0 +1,97 @@
+.register-wrapper {
+    width: 100vw;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.register-container {
+    width: 90%;
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-picture {
+    width: 200px; 
+    height: 200px; 
+    border-radius: 50%;
+    overflow: hidden; 
+    border: 2px solid #ffffff; 
+  }
+  
+  .profile-picture img {
+    width: 100%;
+    height: 100%; 
+    object-fit: cover; 
+  }
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
+    width: 80%;
+    gap: 0.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+}
+
+.input-group input {
+    flex-grow: 1;
+    padding: 0.5rem;
+}
+
+.input-group button {
+    padding: 0.5rem 1rem;
+    background-color: #b57edc; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.input-group button:hover {
+    background-color: #905da8; 
+}
+
+.input-group button[disabled] {
+    background-color: #ccc; 
+    cursor: not-allowed;
+}
+
+.save-changes-button {
+    background-color: #b57edc;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+  }
+  
+  .save-changes-button:hover {
+    background-color: #be88e4;
+  }
+  
+  .save-changes-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }

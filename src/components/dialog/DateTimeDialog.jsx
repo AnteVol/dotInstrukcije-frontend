@@ -7,13 +7,16 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { sentInstructionDate } from "../../api/ProfessorApi";
 
-const DateTimeDialog = ({ open, onClose, professor }) => {
+
+
+const DateTimeDialog = ({ open, onClose, professor, userId }) => {
   const [value, setValue] = React.useState(dayjs("2024-03-15T15:30"));
 
   const handleClose = () => {
-    sentInstructionDate(value, professor._id);
+    sentInstructionDate(value, professor.id, JSON.parse(localStorage.getItem("user")).id);
     onClose();
   };
+
 
   return (
     <Dialog open={open} onClose={handleClose}>

@@ -13,7 +13,7 @@ export const handleLogin = async (data, user) => {
         body: JSON.stringify(data),
       }
     );
-
+    console.log(response)
     // Check if the request was successful
     if (response.ok) {
       const result = await response.json();
@@ -21,18 +21,22 @@ export const handleLogin = async (data, user) => {
       // Clear previous token and user data
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-
+      console.log(result)
       // Save the token to the local storage
       localStorage.setItem("token", result.token);
+      var status = ""
       if (user === "student") {
-        result.student.status = "student";
+        status = "student";
       } else {
-        result.professor.status = "professor";
+        status = "professor";
       }
-
+      console.log(user)
+      const userData = user === "student" ? result.user : result.user;
+      console.log(userData)
+      userData.status = status;
       localStorage.setItem(
         "user",
-        JSON.stringify(user === "student" ? result.student : result.professor)
+        JSON.stringify(userData)
       );
       window.location.href = "/";
     } else {
@@ -45,13 +49,15 @@ export const handleLogin = async (data, user) => {
 
 export const handlerRegister = async (formData, user) => {
   try {
+    console.log(import.meta.env.VITE_REACT_BACKEND_URL + "/register/" + user)
+    console.log(JSON.stringify(formData))
     const response = await axios.post(
       import.meta.env.VITE_REACT_BACKEND_URL + "/register/" + user,
       formData,
       {}
     );
 
-    if (response.status === 201) {
+    if (response.status === 201 || response.status === 200) {
       console.log(user + " registered successfully");
       window.location.href = "/login";
     } else {

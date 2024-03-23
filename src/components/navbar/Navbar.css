@@ -30,3 +30,13 @@
     justify-content: space-evenly;
   }
 }
+.user-type-icon {
+  display: flex;
+  align-items: center;
+}
+
+.user-type-icon img {
+  width: 50px;
+  margin-right: 5px;
+  background-color: transparent;
+}

@@ -13,7 +13,9 @@ function NewSubjectPage() {
       url: newSubjectUrl,
       description: newSubjectDescription,
     };
+    console.log(subject)
     createSubject(subject);
+    
   };
 
   return (

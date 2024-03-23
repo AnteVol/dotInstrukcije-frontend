@@ -31,7 +31,7 @@ function RegisterPage() {
   const [professorEmail, setProfessorEmail] = useState("");
   const [professorPassword, setProfessorPassword] = useState("");
   const [professorConfirmPassword, setProfessorConfirmPassword] = useState("");
-  const [professorProfilePicture, setProfessorProfilePicture] = useState(null);
+  const [professorProfilePicture, setProfessorProfilePicture] = useState();
   const [professorSubjects, setProfessorSubjects] = useState([]);
 
   const handleStudentSubmit = async (event) => {
@@ -44,12 +44,20 @@ function RegisterPage() {
     studentData.append("email", studentEmail);
     studentData.append("password", studentPassword);
     studentData.append("confirmPassword", studentConfirmPassword);
-    studentData.append("profilePicture", studentProfilePicture);
+    studentData.append("profilePictureUrl", studentProfilePicture);
 
     console.log(studentData);
-
+    const data = {
+      name: studentName,
+      surname: studentSurname,
+      email: studentEmail,
+      password: studentPassword,
+      confirmPassword: studentConfirmPassword,
+      profilePictureUrl: studentProfilePicture
+    };
+    console.log(data);
     // Send the data to the server
-    handlerRegister(studentData, "student");
+    handlerRegister(data, "student");
   };
 
   const handleProfessorSubmit = async (event) => {
@@ -61,12 +69,19 @@ function RegisterPage() {
     professorData.append("email", professorEmail);
     professorData.append("password", professorPassword);
     professorData.append("confirmPassword", professorConfirmPassword);
-    professorData.append("profilePicture", professorProfilePicture);
+    professorData.append("profilePictureUrl", professorProfilePicture);
     professorData.append("subjects", professorSubjects.map((s) => s.url));
-
-    console.log(professorData);
-
-    handlerRegister(professorData, "professor");
+    const data = {
+      name: professorName,
+      surname: professorSurname,
+      email: professorEmail,
+      password: professorPassword,
+      confirmPassword: professorConfirmPassword,
+      profilePictureUrl: professorProfilePicture,
+      subjects : professorSubjects.map((s) => s.url)
+    };
+    console.log(data);
+    handlerRegister(data, "professor");
   };
 
   const handleStudentImageChange = (event) => {
